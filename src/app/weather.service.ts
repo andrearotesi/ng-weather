@@ -26,14 +26,23 @@ export class WeatherService implements OnDestroy {
     this.stopPolling.complete();
   }
 
-  addOrUpdateCurrentConditions(zipcode: string, country: Country): void {
+  addOrUpdateCurrentConditions(zipcode: string, country: Country): Observable<any> {
     /* If the weather conditions for the given zipcode have already been added,
     they are simply updated, otherwise the new conditions are added to the list */
-    this.http.get(`${WeatherService.URL}/weather?zip=${zipcode},${country.code}&units=imperial&APPID=${WeatherService.APPID}`)
-        .subscribe(data => {
-          const condition = this.getCurrentConditions().find(cond => cond.zip === zipcode);
-          condition ? condition.data = data : this.currentConditions.push({zip: zipcode, country: country, data: data});
-        });
+    return new Observable((sub) => {
+      this.http.get(`${WeatherService.URL}/weather?zip=${zipcode},${country.code}&units=imperial&APPID=${WeatherService.APPID}`)
+          .subscribe({
+            next: (data) => {
+              const condition = this.getCurrentConditions().find(cond => cond.zip === zipcode);
+              condition ? condition.data = data : this.currentConditions.push({zip: zipcode, country: country, data: data});
+              sub.next(condition);
+              sub.complete();
+            },
+            error: (err) => {
+              sub.error(err);
+            }
+          });
+    });
   }
 
   removeCurrentConditions(zipcode: string) {
@@ -56,8 +65,8 @@ export class WeatherService implements OnDestroy {
     /* Refresh weather data for all current conditions */
     return new Observable<any>((sub) => {
       this.getCurrentConditions().forEach(condition => {
-        this.addOrUpdateCurrentConditions(condition.zip, condition.country);
-        sub.next(condition.data);
+        this.addOrUpdateCurrentConditions(condition.zip, condition.country)
+            .subscribe(res => sub.next(res));
       });
       sub.complete();
     });

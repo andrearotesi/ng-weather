@@ -16,6 +16,9 @@ export class StatesButtonComponent implements OnInit {
   @Input()
   doneTemplate: TemplateRef<any>;
 
+  @Input()
+  errorTemplate: TemplateRef<any>;
+
   currentTemplate: TemplateRef<any>;
 
   @Input()
@@ -26,16 +29,24 @@ export class StatesButtonComponent implements OnInit {
         next: () => this.currentTemplate = this.workingTemplate,
         complete: () => {
           this.currentTemplate = this.doneTemplate;
-          setTimeout(() => {
-            this.currentTemplate = this.initialTemplate;
-          }, 500);
+          this.resetTemplate();
         },
+        error: () => {
+          this.currentTemplate = this.errorTemplate;
+          this.resetTemplate();
+        }
       });
     }
   }
 
   ngOnInit() {
     this.currentTemplate = this.initialTemplate;
+  }
+
+  resetTemplate() {
+    setTimeout(() => {
+      this.currentTemplate = this.initialTemplate;
+    }, 500);
   }
 
 }

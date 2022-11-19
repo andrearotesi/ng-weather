@@ -37,3 +37,6 @@ button {
 .done {
     background-color: #2D9043;
 }
+.error {
+    background-color: #E74325;
+}

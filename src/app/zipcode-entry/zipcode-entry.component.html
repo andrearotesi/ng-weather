@@ -22,7 +22,7 @@
   <br>
 
   <app-states-button [initialTemplate]="save" [workingTemplate]="saving"
-                     [doneTemplate]="done" [observable]="addLocation$">
+                     [doneTemplate]="done" [errorTemplate]="error" [observable]="addLocation$">
   </app-states-button>
   <ng-template #save>
     <button class="default" (click)="addLocation(zipcode.value)">
@@ -34,5 +34,8 @@
   </ng-template>
   <ng-template #done>
     <button class="done">✓ Done</button>
+  </ng-template>
+  <ng-template #error>
+    <button class="error">x Error</button>
   </ng-template>
 </div>

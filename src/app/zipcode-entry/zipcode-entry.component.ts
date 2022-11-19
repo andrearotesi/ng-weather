@@ -33,13 +33,8 @@ export class ZipcodeEntryComponent {
   constructor(private service: LocationService) { }
 
   addLocation(zipcode: string) {
-    this.addLocation$ = new Observable<any>(sub => {
-      if (zipcode) {
-        this.service.addLocation(zipcode, this.currentCountry);
-        sub.next();
-      }
-      sub.complete();
-    });
+    this.addLocation$ = this.service.addLocation(zipcode, this.currentCountry);
+    this.addLocation$.subscribe();
   }
 
 }
