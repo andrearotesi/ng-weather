@@ -1,6 +1,24 @@
 <div class="well">
-  <h2>Enter a zipcode:</h2>
-  <input type="text" #zipcode placeholder="Zipcode" class="form-control">
+  <h2>Enter country and zipcode:</h2>
+
+  <div class="row">
+    <!-- Country -->
+    <div class="col-lg-6">
+      <input type="text" class="form-control" placeholder="Enter country name" [(ngModel)]="country">
+      <div class="dropdown-container">
+        <ng-container *ngFor="let availableCountry of availableCountries">
+          <div class="dropdown-item" appBoldMatch [textToMatch]="country"
+               [innerHTML]="availableCountry" (click)="country = availableCountry"></div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Zipcode -->
+    <div class="col-lg-6">
+      <input type="text" #zipcode placeholder="Zipcode" class="form-control">
+    </div>
+  </div>
+
   <br>
 
   <app-states-button [initialTemplate]="save" [workingTemplate]="saving"

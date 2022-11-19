@@ -1,3 +1,27 @@
+/*
+* Countries dropdown
+*********************************/
+.dropdown-container {
+    position: absolute;
+    z-index: 1;
+    height: 250px;
+    overflow-y: auto;
+}
+
+.dropdown-item {
+    padding: 5px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.dropdown-item:hover {
+    background-color: lightgrey;
+}
+
+
+/*
+* Add location buttons
+*********************************/
 button {
     color: white;
     padding: 5px;
