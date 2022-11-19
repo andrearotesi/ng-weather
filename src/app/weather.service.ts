@@ -1,7 +1,7 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {Observable, Subject, timer} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {retry, share, switchMap, takeUntil} from 'rxjs/operators';
+import {switchMap, takeUntil} from 'rxjs/operators';
 import {Country} from './countries.model';
 
 @Injectable()
@@ -17,8 +17,6 @@ export class WeatherService implements OnDestroy {
     /* Polling mechanism to refresh weather conditions every 30 seconds */
     timer(1, 30000).pipe(
         switchMap(() => this.refreshCurrentConditions()),
-        retry(),
-        share(),
         takeUntil(this.stopPolling)
     ).subscribe();
   }
