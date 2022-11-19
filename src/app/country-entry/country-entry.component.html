@@ -1,0 +1,8 @@
+<div class="well">
+    <h2>Enter a country:</h2>
+    <input type="text" placeholder="Enter country name" [(ngModel)]="country">
+
+    <ng-container *ngFor="let availableCountry of availableCountries">
+        <div appBoldMatch [textToMatch]="country" [innerHTML]="availableCountry"></div>
+    </ng-container>
+</div>
