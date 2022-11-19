@@ -28,7 +28,11 @@ export class LocationService {
           .subscribe({
             next: (res) => sub.next(res),
             complete: () => sub.complete(),
-            error: (err) => sub.error(err),
+            error: (err) => {
+              // In case of error, remove location from localStorage
+              this.zipCountryMap.delete(zipcode);
+              sub.error(err);
+            },
           });
     });
   }
