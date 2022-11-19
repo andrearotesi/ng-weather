@@ -11,7 +11,6 @@ export class LocationService {
   zipCountryMap = new Map();
 
   constructor(private weatherService: WeatherService) {
-    // fare retrieve!!
     this.zipCountryMap = new Map(JSON.parse(localStorage.getItem(ZIP_COUNTRY_MAP)));
     if (this.zipCountryMap) {
       this.zipCountryMap.forEach((country, zip) => {
