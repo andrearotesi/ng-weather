@@ -1,35 +1,34 @@
 import { Injectable } from '@angular/core';
 import {WeatherService} from './weather.service';
+import {Country} from './countries.model';
 
-export const LOCATIONS = 'locations';
+export const ZIP_COUNTRY_MAP = 'zipCountryMap';
 
 @Injectable()
 export class LocationService {
 
-  locations: string[] = [];
+  // Map containing the zipcode as key and the country as value
+  zipCountryMap = new Map();
 
   constructor(private weatherService: WeatherService) {
-    const locString = localStorage.getItem(LOCATIONS);
-    if (locString) {
-      this.locations = JSON.parse(locString);
-    }
-    for (const loc of this.locations) {
-      this.weatherService.addOrUpdateCurrentConditions(loc);
+    // fare retrieve!!
+    this.zipCountryMap = new Map(JSON.parse(localStorage.getItem(ZIP_COUNTRY_MAP)));
+    if (this.zipCountryMap) {
+      this.zipCountryMap.forEach((country, zip) => {
+        this.weatherService.addOrUpdateCurrentConditions(zip, country);
+      });
     }
   }
 
-  addLocation(zipcode: string) {
-    this.locations.push(zipcode);
-    localStorage.setItem(LOCATIONS, JSON.stringify(this.locations));
-    this.weatherService.addOrUpdateCurrentConditions(zipcode);
+  addLocation(zipcode: string, country: Country) {
+    this.zipCountryMap.set(zipcode, country);
+    localStorage.setItem(ZIP_COUNTRY_MAP, JSON.stringify([...this.zipCountryMap]));
+    this.weatherService.addOrUpdateCurrentConditions(zipcode, country);
   }
 
   removeLocation(zipcode: string) {
-    const index = this.locations.indexOf(zipcode);
-    if (index !== -1) {
-      this.locations.splice(index, 1);
-      localStorage.setItem(LOCATIONS, JSON.stringify(this.locations));
-      this.weatherService.removeCurrentConditions(zipcode);
-    }
+    this.zipCountryMap.delete(zipcode);
+    localStorage.setItem(ZIP_COUNTRY_MAP, JSON.stringify([...this.zipCountryMap]));
+    this.weatherService.removeCurrentConditions(zipcode);
   }
 }

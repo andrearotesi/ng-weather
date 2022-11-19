@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {LocationService} from '../location.service';
 import {observable, Observable} from 'rxjs';
-import {countries} from '../country-store';
+import {countries, Country} from '../countries.model';
 
 @Component({
   selector: 'app-zipcode-entry',
@@ -17,12 +17,17 @@ export class ZipcodeEntryComponent {
     /* Returns the countries that contain the input's value.
     if the input matches a country from the list, an empty array is returned */
     if (this.country) {
-      if (countries.find(c => c.toLowerCase() === this.country.toLowerCase())) {
+      if (this.currentCountry) {
         return [];
       }
-      return countries.filter(c => c.toLowerCase().includes(this.country.toLowerCase()));
+      return countries.filter(c => c.description.toLowerCase().includes(this.country.toLowerCase()))
+          .map(c => c.description);
     }
     return [];
+  }
+
+  get currentCountry(): Country {
+    return countries.find(c => c.description.toLowerCase() === this.country.toLowerCase())
   }
 
   constructor(private service: LocationService) { }
@@ -30,7 +35,7 @@ export class ZipcodeEntryComponent {
   addLocation(zipcode: string) {
     this.addLocation$ = new Observable<any>(sub => {
       if (zipcode) {
-        this.service.addLocation(zipcode);
+        this.service.addLocation(zipcode, this.currentCountry);
         sub.next();
       }
       sub.complete();

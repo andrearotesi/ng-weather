@@ -2,6 +2,7 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {Observable, Subject, timer} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {retry, share, switchMap, takeUntil} from 'rxjs/operators';
+import {Country} from './countries.model';
 
 @Injectable()
 export class WeatherService implements OnDestroy {
@@ -27,13 +28,13 @@ export class WeatherService implements OnDestroy {
     this.stopPolling.complete();
   }
 
-  addOrUpdateCurrentConditions(zipcode: string): void {
+  addOrUpdateCurrentConditions(zipcode: string, country: Country): void {
     /* If the weather conditions for the given zipcode have already been added,
     they are simply updated, otherwise the new conditions are added to the list */
-    this.http.get(`${WeatherService.URL}/weather?zip=${zipcode},us&units=imperial&APPID=${WeatherService.APPID}`)
+    this.http.get(`${WeatherService.URL}/weather?zip=${zipcode},${country.code}&units=imperial&APPID=${WeatherService.APPID}`)
         .subscribe(data => {
           const condition = this.getCurrentConditions().find(cond => cond.zip === zipcode);
-          condition ? condition.data = data : this.currentConditions.push({zip: zipcode, data: data});
+          condition ? condition.data = data : this.currentConditions.push({zip: zipcode, country: country, data: data});
         });
   }
 
@@ -49,15 +50,15 @@ export class WeatherService implements OnDestroy {
     return this.currentConditions;
   }
 
-  getForecast(zipcode: string): Observable<any> {
-    return this.http.get(`${WeatherService.URL}/forecast/daily?zip=${zipcode},us&units=imperial&cnt=5&APPID=${WeatherService.APPID}`);
+  getForecast(zipcode: string, countryCode: string): Observable<any> {
+    return this.http.get(`${WeatherService.URL}/forecast/daily?zip=${zipcode},${countryCode}&units=imperial&cnt=5&APPID=${WeatherService.APPID}`);
   }
 
   refreshCurrentConditions(): Observable<any> {
     /* Refresh weather data for all current conditions */
     return new Observable<any>((sub) => {
       this.getCurrentConditions().forEach(condition => {
-        this.addOrUpdateCurrentConditions(condition.zip);
+        this.addOrUpdateCurrentConditions(condition.zip, condition.country);
         sub.next(condition.data);
       });
       sub.complete();
