@@ -1,0 +1,15 @@
+button {
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.default {
+    background-color: #4C94C6;
+}
+.loading {
+    background-color: #91B7D1;
+}
+.done {
+    background-color: #2D9043;
+}

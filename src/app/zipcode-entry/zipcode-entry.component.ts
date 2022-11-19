@@ -1,16 +1,26 @@
 import { Component } from '@angular/core';
-import {LocationService} from "../location.service";
+import {LocationService} from '../location.service';
+import {observable, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-zipcode-entry',
-  templateUrl: './zipcode-entry.component.html'
+  templateUrl: './zipcode-entry.component.html',
+  styleUrls: ['./zipcode-entry.component.css']
 })
 export class ZipcodeEntryComponent {
 
-  constructor(private service : LocationService) { }
+  addLocation$: Observable<any>;
 
-  addLocation(zipcode : string){
-    this.service.addLocation(zipcode);
+  constructor(private service: LocationService) { }
+
+  addLocation(zipcode: string) {
+    this.addLocation$ = new Observable<any>(sub => {
+      if (zipcode) {
+        this.service.addLocation(zipcode);
+        sub.next();
+      }
+      sub.complete();
+    });
   }
 
 }
