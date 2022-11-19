@@ -116,5 +116,9 @@
     "@schematics/angular:directive": {
       "prefix": "app"
     }
-  }
+  },
+  "cli": {
+    "analytics": false
+  },
+  "defaultProject": "ng-weather"
 }
