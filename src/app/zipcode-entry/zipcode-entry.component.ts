@@ -11,23 +11,12 @@ import {countries, Country} from '../countries.model';
 export class ZipcodeEntryComponent {
 
   addLocation$: Observable<any>;
-  country: string = null;
-
-  get availableCountries(): string[] {
-    return this.country ?
-        countries.filter(c => c.description.toLowerCase().includes(this.country?.toLowerCase()))
-            .map(c => c.description)
-        : [];
-  }
-
-  get currentCountry(): Country {
-    return countries.find(c => c.description.toLowerCase() === this.country?.toLowerCase());
-  }
+  country: Country = null;
 
   constructor(private service: LocationService) { }
 
   addLocation(zipcode: string) {
-    this.addLocation$ = this.service.addLocation(zipcode, this.currentCountry);
+    this.addLocation$ = this.service.addLocation(zipcode, this.country);
     this.addLocation$.subscribe();
   }
 

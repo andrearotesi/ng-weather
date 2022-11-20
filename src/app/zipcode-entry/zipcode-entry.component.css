@@ -1,27 +1,4 @@
 /*
-* Countries dropdown
-*********************************/
-.dropdown-container {
-    position: absolute;
-    z-index: 1;
-    height: 250px;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.dropdown-item {
-    padding: 5px;
-    cursor: pointer;
-    background-color: white;
-    width: 200px;
-}
-
-.dropdown-item:hover {
-    background-color: lightgrey;
-}
-
-
-/*
 * Add location buttons
 *********************************/
 button {

@@ -16,6 +16,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { StatesButtonComponent } from './states-button/states-button.component';
 import { BoldMatchDirective } from './directives/bold-match.directive';
+import { CountryEntryComponent } from './country-entry/country-entry.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { BoldMatchDirective } from './directives/bold-match.directive';
     CurrentConditionsComponent,
     MainPageComponent,
     StatesButtonComponent,
-    BoldMatchDirective
+    BoldMatchDirective,
+    CountryEntryComponent
   ],
   imports: [
     BrowserModule,

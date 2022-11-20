@@ -4,13 +4,7 @@
   <div class="row">
     <!-- Country -->
     <div class="col-lg-6">
-      <input type="text" class="form-control" placeholder="Enter country name" [(ngModel)]="country">
-      <div class="dropdown-container" *ngIf="!currentCountry">
-        <ng-container *ngFor="let availableCountry of availableCountries">
-          <div class="dropdown-item" appBoldMatch [textToMatch]="country"
-               [innerHTML]="availableCountry" (click)="country = availableCountry"></div>
-        </ng-container>
-      </div>
+      <app-country-entry (onCountrySelection)="country = $event"></app-country-entry>
     </div>
 
     <!-- Zipcode -->
