@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {LocationService} from '../location.service';
 import {Observable} from 'rxjs';
-import {countries, Country} from '../countries.model';
+import {Country} from '../countries.model';
 
 @Component({
   selector: 'app-zipcode-entry',
@@ -17,7 +17,6 @@ export class ZipcodeEntryComponent {
 
   addLocation(zipcode: string) {
     this.addLocation$ = this.service.addLocation(zipcode, this.country);
-    this.addLocation$.subscribe();
   }
 
 }
