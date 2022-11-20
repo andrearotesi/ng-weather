@@ -6,12 +6,14 @@
     z-index: 1;
     height: 250px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .dropdown-item {
     padding: 5px;
     cursor: pointer;
     background-color: white;
+    width: 200px;
 }
 
 .dropdown-item:hover {
