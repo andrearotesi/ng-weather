@@ -36,4 +36,8 @@ export class CountryEntryComponent {
     this.country = country.description;
     this.onCountrySelection.emit(country);
   }
+
+  trackByCode(index, item: Country) {
+    return item.code;
+  }
 }

@@ -4,7 +4,7 @@
 
 <!-- Country dropdown -->
 <div class="dropdown-container" *ngIf="!matchingCountry">
-    <ng-container *ngFor="let availableCountry of availableCountries">
+    <ng-container *ngFor="let availableCountry of availableCountries; trackBy:trackByCode">
         <div class="dropdown-item" appBoldMatch [textToMatch]="country"
              [innerHTML]="availableCountry.description"
              (click)="selectCountry(availableCountry)">
