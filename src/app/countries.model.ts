@@ -233,7 +233,7 @@ export let countries: Country[] = [
     { code: 'UG', description: 'Uganda' },
     { code: 'UA', description: 'Ukraine' },
     { code: 'AE', description: 'United Arab Emirates' },
-    { code: 'GB', description: 'United Kingdom of Great Britain and Northern Ireland' },
+    { code: 'GB', description: 'United Kingdom' },
     { code: 'UM', description: 'United States Minor Outlying Islands' },
     { code: 'US', description: 'United States of America' },
     { code: 'UY', description: 'Uruguay' },
