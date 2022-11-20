@@ -1,5 +1,5 @@
 
-export let countries: Country[] = [
+export const countries: Country[] = [
     { code: 'AF', description: 'Afghanistan' },
     { code: 'AL', description: 'Albania' },
     { code: 'DZ', description: 'Algeria' },
