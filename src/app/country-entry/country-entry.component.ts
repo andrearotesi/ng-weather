@@ -13,12 +13,14 @@ export class CountryEntryComponent {
   country: string = null;
 
   get availableCountries(): Country[] {
+    // Returns all countries whose description contains the input's value
     return this.country ?
         countries.filter(c => c.description.toLowerCase().includes(this.country?.toLowerCase()))
         : [];
   }
 
   get matchingCountry() {
+    // Returns the country that matches the input's value
     return this.country ?
         countries.find(c => c.description.toLowerCase() === this.country.toLowerCase())
         : null;
