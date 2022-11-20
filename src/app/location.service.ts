@@ -22,17 +22,15 @@ export class LocationService {
 
   addLocation(zipcode: string, country: Country) {
     return new Observable((sub) => {
-      this.zipCountryMap.set(zipcode, country);
-      localStorage.setItem(ZIP_COUNTRY_MAP, JSON.stringify([...this.zipCountryMap]));
       this.weatherService.addOrUpdateCurrentConditions(zipcode, country)
           .subscribe({
-            next: (res) => sub.next(res),
-            complete: () => sub.complete(),
-            error: (err) => {
-              // In case of error, remove location from localStorage
-              this.zipCountryMap.delete(zipcode);
-              sub.error(err);
+            next: (res) => {
+              this.zipCountryMap.set(zipcode, country);
+              localStorage.setItem(ZIP_COUNTRY_MAP, JSON.stringify([...this.zipCountryMap]));
+              sub.next(res)
             },
+            complete: () => sub.complete(),
+            error: (err) => sub.error(err)
           });
     });
   }
