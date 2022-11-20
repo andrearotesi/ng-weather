@@ -40,6 +40,7 @@ export class WeatherService implements OnDestroy {
               sub.complete();
             },
             error: (err) => {
+              console.error(`Error while retrieving conditions for ${zipcode} - ${country.code}!`, err);
               sub.error(err);
             }
           });
@@ -67,7 +68,10 @@ export class WeatherService implements OnDestroy {
     return new Observable<any>((sub) => {
       this.getCurrentConditions().forEach(condition => {
         this.addOrUpdateCurrentConditions(condition.zip, condition.country)
-            .subscribe(res => sub.next(res));
+            .subscribe({
+              next: () => sub.next(condition),
+              error: (err) => sub.error(err)
+            });
       });
       sub.complete();
     });
