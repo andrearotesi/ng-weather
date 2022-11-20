@@ -27,7 +27,7 @@ export class ZipcodeEntryComponent {
   }
 
   get currentCountry(): Country {
-    return countries.find(c => c.description.toLowerCase() === this.country.toLowerCase())
+    return countries.find(c => c.description.toLowerCase() === this.country.toLowerCase());
   }
 
   constructor(private service: LocationService) { }
