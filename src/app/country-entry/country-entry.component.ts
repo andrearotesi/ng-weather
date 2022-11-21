@@ -16,7 +16,7 @@ export class CountryEntryComponent {
     // Returns all countries whose description contains the input's value
     return this.country ?
         countries.filter(c => c.description.toLowerCase().includes(this.country?.toLowerCase()))
-        : countries;
+        : [];
   }
 
   get matchingCountry() {
