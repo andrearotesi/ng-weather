@@ -27,6 +27,8 @@ export class CountryEntryComponent {
   }
 
   onCountryChange() {
+    /* If the input's value matches a country, it gets emitted.
+    this logic is created to the support manual insertion of a country. */
     if (this.matchingCountry) {
       this.selectCountry(this.matchingCountry);
     }
