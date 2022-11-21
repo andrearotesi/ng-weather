@@ -1,7 +1,16 @@
 /*
 * Countries dropdown
 *********************************/
+input:hover + .dropdown-container {
+    display: block;
+}
+
+.dropdown-container:hover {
+    display: block;
+}
+
 .dropdown-container {
+    display: none;
     position: absolute;
     z-index: 1;
     height: 250px;
